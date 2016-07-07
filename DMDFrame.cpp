@@ -64,33 +64,44 @@ void DMDFrame::swapBuffers(DMDFrame &other)
 #endif
 }
 
+// set 8 pixels at this location
+void DMDFrame::setByte(unsigned int x, unsigned int y, uint8_t byte)
+{
+  if(x+7 >= width || y >= height)
+    return;
+
+  int byte_idx = pixelToBitmapIndex(x,y);
+
+  bitmap[byte_idx] = ~byte;
+}
+
 // Set a single LED on or off. Remember that the pixel array is inverted (bit set = LED off)
 void DMDFrame::setPixel(unsigned int x, unsigned int y, DMDGraphicsMode mode)
 {
   if(x >= width || y >= height)
-     return;
+    return;
 
   int byte_idx = pixelToBitmapIndex(x,y);
   uint8_t bit = pixelToBitmask(x);
   switch(mode) {
-     case GRAPHICS_ON:
-            bitmap[byte_idx] &= ~bit; // and with the inverse of the bit - so
-            break;
-     case GRAPHICS_OFF:
-            bitmap[byte_idx] |= bit; // set bit (which turns it off)
-            break;
-     case GRAPHICS_OR:
-          bitmap[byte_idx] = ~(~bitmap[byte_idx] | bit);
-          break;
-      case GRAPHICS_NOR:
-          bitmap[byte_idx] = (~bitmap[byte_idx] | bit);
-          break;
-      case GRAPHICS_XOR:
-          bitmap[byte_idx] ^= bit;
-          break;
-      case GRAPHICS_INVERSE:
-      case GRAPHICS_NOOP:
-        break;
+    case GRAPHICS_ON:
+      bitmap[byte_idx] &= ~bit; // and with the inverse of the bit - so
+      break;
+    case GRAPHICS_OFF:
+      bitmap[byte_idx] |= bit; // set bit (which turns it off)
+      break;
+    case GRAPHICS_OR:
+      bitmap[byte_idx] = ~(~bitmap[byte_idx] | bit);
+      break;
+    case GRAPHICS_NOR:
+      bitmap[byte_idx] = (~bitmap[byte_idx] | bit);
+      break;
+    case GRAPHICS_XOR:
+      bitmap[byte_idx] ^= bit;
+      break;
+    case GRAPHICS_INVERSE:
+    case GRAPHICS_NOOP:
+      break;
    }
 }
 

@@ -109,6 +109,8 @@ class DMDFrame
   // Get status of a single LED
   bool getPixel(unsigned int x, unsigned int y);
 
+  void setByte(unsigned int x, unsigned int y, uint8_t byte);
+
   // Move a region of pixels from one area to another
   void movePixels(unsigned int from_x, unsigned int from_y,
                   unsigned int to_x, unsigned int to_y,
