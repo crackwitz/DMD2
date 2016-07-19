@@ -44,7 +44,7 @@ void SPIDMD::beginNoTimer()
   SPI.setBitOrder(MSBFIRST);
   SPI.setDataMode(SPI_MODE0);	// CPOL=0, CPHA=0
 #ifdef __AVR__
-  SPI.setClockDivider(SPI_CLOCK_DIV4); // 4MHz clock. 8MHz (DIV2 not DIV4) is possible if you have short cables. Longer cables may need DIV8/DIV16.
+  SPI.setClockDivider(SPI_CLOCK_DIV2); // 4MHz clock. 8MHz (DIV2 not DIV4) is possible if you have short cables. Longer cables may need DIV8/DIV16.
 #elif defined(ESP8266)
   SPI.setFrequency(4000000); // ESP can run at 80mhz or 160mhz, setting frequency directly is easier, set to 4MHz.
 #else
