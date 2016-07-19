@@ -64,6 +64,17 @@ void DMDFrame::swapBuffers(DMDFrame &other)
 #endif
 }
 
+// get 8 pixels at this location
+uint8_t DMDFrame::getByte(unsigned int x, unsigned int y)
+{
+  if(x+7 >= width || y >= height)
+    return 0x00;
+
+  int byte_idx = pixelToBitmapIndex(x,y);
+
+  return ~bitmap[byte_idx];
+}
+
 // set 8 pixels at this location
 void DMDFrame::setByte(unsigned int x, unsigned int y, uint8_t byte)
 {
